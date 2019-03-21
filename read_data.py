@@ -3,7 +3,6 @@
 # Date: 3/20/19
 # Time: 4:43 PM
 
-import os
 import numpy as np
 
 def read_session_data(files, multi_value = False):
@@ -21,4 +20,4 @@ def read_session_data(files, multi_value = False):
     if multi_value:
         session_data = [np.asarray(x) for x in session_data]
 
-    return np.asarray(session_data)
+    return np.asarray(session_data).astype(np.long)
