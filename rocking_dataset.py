@@ -19,12 +19,12 @@ class RockingDataset(Dataset):
         arm_files = [os.path.join(os.path.join(dir_path, session), "armIMU.txt") for session in os.listdir(dir_path)]
         wrist_files = [os.path.join(os.path.join(dir_path, session), "wristIMU.txt") for session in os.listdir(dir_path)]
         detection_files = [os.path.join(os.path.join(dir_path, session), "detection.txt") for session in os.listdir(dir_path)]
-        time_files = [os.path.join(os.path.join(dir_path, session), "time.txt") for session in os.listdir(dir_path)]
+        # time_files = [os.path.join(os.path.join(dir_path, session), "time.txt") for session in os.listdir(dir_path)]
 
         self.arm_data = read_session_data(arm_files, multi_value=True)
         self.wrist_data = read_session_data(wrist_files, multi_value=True)
-        self.label_arr = read_session_data(detection_files, multi_value=False)
-        self.time_data = read_session_data(time_files, multi_value=False)
+        self.label_arr = read_session_data(detection_files, multi_value=False, is_label=True)
+        # self.time_data = read_session_data(time_files, multi_value=False)
 
         # Calculate len
         self.data_len = len(self.label_arr)
@@ -32,7 +32,7 @@ class RockingDataset(Dataset):
     def __getitem__(self, index):
         arm = self.arm_data[index]
         wrist = self.wrist_data[index]
-        input = np.concatenate([arm, wrist])
+        input = np.concatenate([arm, wrist], axis=1)
 
         if self.transforms is not None:
             input = self.transforms(input)
