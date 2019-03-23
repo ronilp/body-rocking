@@ -15,9 +15,10 @@ EARLY_STOPPING_PATIENCE = 10
 DATA_DIR = "data/TrainingData"
 ALLOWED_CLASSES = ["0", "1"]
 NUM_CLASSES = len(ALLOWED_CLASSES)
+MODEL_DIR = "results"
 
 ### Miscellaneous Config
-MODEL_PREFIX = "model_name"
+MODEL_PREFIX = "cnn_v1"
 BATCH_SIZE = 16
 RANDOM_SEED = 629
 TIME_WINDOW = 5 # in seconds
