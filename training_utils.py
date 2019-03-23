@@ -2,6 +2,7 @@
 # Author: Ronil Pancholia
 # Date: 3/20/19
 # Time: 5:22 PM
+import copy
 import os
 import sys
 import time
@@ -74,6 +75,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
             patience = 0
             best_acc = val_acc[-1]
             best_loss = val_loss[-1]
+            best_model = copy.deepcopy(model)
             print('Best accuracy: {:4f}'.format(best_acc))
             print('Best loss:', best_loss)
             model_name = MODEL_PREFIX + "_" + str(epoch) + "_" + str(time.time()) + ".pt"
@@ -91,7 +93,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
     print('Best accuracy: {:4f}'.format(best_acc))
     print('Best loss:', best_loss)
 
-    return train_loss, train_acc, val_loss, val_acc
+    return train_loss, train_acc, val_loss, val_acc, best_model
 
 
 def get_model():

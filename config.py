@@ -7,8 +7,8 @@ import torch
 
 ### Learning Parameters
 BASE_LR = 5e-5
-TRAIN_EPOCHS = 50
-EARLY_STOPPING_ENABLED = False
+TRAIN_EPOCHS = 5
+EARLY_STOPPING_ENABLED = True
 EARLY_STOPPING_PATIENCE = 10
 
 ### Dataset Config
@@ -21,7 +21,7 @@ MODEL_DIR = "results"
 MODEL_PREFIX = "cnn_v1"
 BATCH_SIZE = 16
 RANDOM_SEED = 629
-TIME_WINDOW = 5 # in seconds
+TIME_WINDOW = 3 # in seconds
 TRAIN_OVERLAP = 0.5
 TEST_OVERLAP = 0
 FREQUENCY = 50

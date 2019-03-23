@@ -24,7 +24,7 @@ def save_loss_acc(train_loss, train_acc, val_loss, val_acc):
     pickle.dump(val_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "val_acc"), "wb"))
 
 
-def test_model():
+def test_model(model):
     test_dataloader = load_testset(RockingDataset)
     model.eval()
     results = []
@@ -47,8 +47,8 @@ val_dataloader = dataset_loaders['val']
 model, opt = get_model()
 criterion = nn.CrossEntropyLoss()
 
-train_loss, train_acc, val_loss, val_acc = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
+train_loss, train_acc, val_loss, val_acc, model = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
 
 save_loss_acc(train_loss, train_acc, val_loss, val_acc)
 
-test_model()
+test_model(model)

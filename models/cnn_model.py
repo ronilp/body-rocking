@@ -4,6 +4,7 @@
 # Time: 5:52 PM
 
 from torch import nn
+from config import FREQUENCY, TIME_WINDOW
 
 class Cnn_Model(nn.Module):
     def __init__(self):
@@ -18,7 +19,7 @@ class Cnn_Model(nn.Module):
         self.dropout = nn.Dropout()
 
     def forward(self, x):
-        x = x.view(-1, 12, 250, 1)
+        x = x.view(-1, 12, FREQUENCY * TIME_WINDOW, 1)
         x = self.act(self.conv1(x))
         x = self.act(self.conv2(x))
         x = self.adaptivePool(x)
