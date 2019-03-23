@@ -88,6 +88,9 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
             print("Early Stopping!")
             break
 
+    print('Best accuracy: {:4f}'.format(best_acc))
+    print('Best loss:', best_loss)
+
     return train_loss, train_acc, val_loss, val_acc
 
 
