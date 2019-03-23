@@ -3,15 +3,14 @@
 # Date: 3/20/19
 # Time: 5:24 PM
 
-import torch
 import numpy as np
+import torch
 from torch import nn
 
-from LRFinder import LRFinder
+from config import RANDOM_SEED, TRAIN_EPOCHS, device
 from dataset_utils import load_datasets, load_testset
 from rocking_dataset import RockingDataset
 from training_utils import get_model, fit
-from config import RANDOM_SEED, TRAIN_EPOCHS, device
 
 torch.manual_seed(RANDOM_SEED)
 

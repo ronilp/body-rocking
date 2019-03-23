@@ -9,6 +9,7 @@ from torch import optim
 from tqdm import tqdm
 
 from config import device, BASE_LR
+from models.cnn_model import Cnn_Model
 from models.mlp import MLP
 
 
@@ -70,6 +71,6 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 
 
 def get_model():
-    model = MLP()
+    model = Cnn_Model()
     model.to(device)
     return model, optim.Adam(model.parameters(), lr=BASE_LR)

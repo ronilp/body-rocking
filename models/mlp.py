@@ -13,7 +13,7 @@ class MLP(nn.Module):
         self.fc2 = nn.Linear(50, 2)
 
     def forward(self, x):
-        x = x.view(-1, 12)
+        x = x.view(-1, 250, 12, 1)
         x = self.fc1(x)
         x = self.fc2(x)
         x = self.sigmoid(x)
