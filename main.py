@@ -3,13 +3,12 @@
 # Date: 3/20/19
 # Time: 5:24 PM
 import os
+import pickle
 import sys
 
 import numpy as np
 import torch
 from torch import nn
-import pickle
-
 from tqdm import tqdm
 
 from config import RANDOM_SEED, TRAIN_EPOCHS, device, MODEL_DIR, MODEL_PREFIX
