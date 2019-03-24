@@ -3,11 +3,14 @@
 # Date: 3/20/19
 # Time: 5:24 PM
 import os
+import sys
 
 import numpy as np
 import torch
 from torch import nn
 import pickle
+
+from tqdm import tqdm
 
 from config import RANDOM_SEED, TRAIN_EPOCHS, device, MODEL_DIR, MODEL_PREFIX
 from dataset_utils import load_datasets, load_testset
@@ -25,11 +28,11 @@ def save_loss_acc(train_loss, train_acc, val_loss, val_acc):
 
 
 def test_model(model):
-    test_dataloader = load_testset(RockingDataset)
+    test_dataloader, test_datasize = load_testset(RockingDataset)
     model.eval()
     results = []
     corrects = 0
-    for image, label in test_dataloader:
+    for image, label in tqdm(test_dataloader['test'], file=sys.stdout):
         image, label = image.to(device), label.to(device)
         outputs = model(image)
         preds = torch.argmax(outputs.data, 1)
@@ -37,7 +40,7 @@ def test_model(model):
         preds = preds.cpu()
         results.extend(np.asarray(preds))
 
-    print("Testing accuracy :", 100 * corrects / len(test_dataloader.dataset))
+    print("Testing accuracy :", 100 * corrects / len(test_dataloader['test'].dataset))
 
 
 dataset_loaders, dataset_sizes = load_datasets(RockingDataset)
