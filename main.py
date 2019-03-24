@@ -20,10 +20,10 @@ torch.manual_seed(RANDOM_SEED)
 
 
 def save_loss_acc(train_loss, train_acc, val_loss, val_acc):
-    pickle.dump(train_loss, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "train_loss"), "wb"))
-    pickle.dump(train_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "train_acc"), "wb"))
-    pickle.dump(val_loss, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "val_loss"), "wb"))
-    pickle.dump(val_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "val_acc"), "wb"))
+    pickle.dump(train_loss, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_train_loss.pkl"), "wb"))
+    pickle.dump(train_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_train_acc.pkl"), "wb"))
+    pickle.dump(val_loss, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_val_loss.pkl"), "wb"))
+    pickle.dump(val_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_val_acc.pkl"), "wb"))
 
 
 def test_model(model):
@@ -34,11 +34,12 @@ def test_model(model):
     for image, label in tqdm(test_dataloader['test'], file=sys.stdout):
         image, label = image.to(device), label.to(device)
         outputs = model(image)
-        preds = torch.argmax(outputs.data, 1)
-        temp = [preds] * 150
+        raw_preds = torch.argmax(outputs.data, 1)
         preds = []
-        for l in temp:
-            preds.extend(l)
+        for pred in raw_preds:
+            for j in range(FREQUENCY * TIME_WINDOW):
+                preds.append(pred)
+
         preds = torch.Tensor(np.asarray(preds).astype(np.long))
         labels = []
         for l in label:
@@ -57,6 +58,11 @@ val_dataloader = dataset_loaders['val']
 
 model, opt = get_model()
 criterion = nn.CrossEntropyLoss()
+
+# from LRFinder import LRFinder
+# lr_finder = LRFinder(model, opt, criterion, device="cpu")
+# lr_finder.range_test(train_dataloader, val_dataloader, end_lr=0.1, num_iter=100)
+# lr_finder.plot()
 
 train_loss, train_acc, val_loss, val_acc, model = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
 

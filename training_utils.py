@@ -13,6 +13,7 @@ from tqdm import tqdm
 
 from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED
 from models.cnn_model import Cnn_Model
+from models.cnn_paper import Cnn_Model3
 
 
 def loss_batch(model, criterion, x, y, opt=None):
@@ -97,6 +98,6 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 
 
 def get_model():
-    model = Cnn_Model()
+    model = Cnn_Model3()
     model.to(device)
     return model, optim.Adam(model.parameters(), lr=BASE_LR)
