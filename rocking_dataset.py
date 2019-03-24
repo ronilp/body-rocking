@@ -22,11 +22,11 @@ class RockingDataset(Dataset):
         # time_files = [os.path.join(os.path.join(dir_path, session), "time.txt") for session in os.listdir(dir_path)]
 
         print("Loading dataset from ", dir_path)
-        self.arm_data = read_session_data(arm_files, multi_value=True)
+        self.arm_data = read_session_data(arm_files, multi_value=True, is_label=False, mode=mode)
         print("Loaded arm data :", self.arm_data.shape)
-        self.wrist_data = read_session_data(wrist_files, multi_value=True)
+        self.wrist_data = read_session_data(wrist_files, multi_value=True, is_label=False, mode=mode)
         print("Loaded wrist data :", self.wrist_data.shape)
-        self.label_arr = read_session_data(detection_files, multi_value=False, is_label=True)
+        self.label_arr = read_session_data(detection_files, multi_value=False, is_label=True, mode=mode)
         print("Loaded label data :", self.label_arr.shape)
         # self.time_data = read_session_data(time_files, multi_value=False)
 
