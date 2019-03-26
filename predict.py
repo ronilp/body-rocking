@@ -17,6 +17,7 @@ from training_utils import get_model
 
 torch.manual_seed(RANDOM_SEED)
 
+
 def test_model(model):
     test_dataloader, test_datasize = load_testset(RockingDataset)
     model.eval()
@@ -28,12 +29,15 @@ def test_model(model):
         preds = preds.cpu()
         results.extend(np.asarray(preds))
 
-    with open("prediction.txt", "w") as f:
-        for r in results:
-            f.write(str(r) + "\n")
+    return results
+
 
 model, opt = get_model()
 model_name = sys.argv[1]
 model.load_state_dict(torch.load(os.path.join(MODEL_DIR, model_name)))
 
-test_model(model)
+results = test_model(model)
+
+with open("prediction.txt", "w") as f:
+    for r in results:
+        f.write(str(r) + "\n")
