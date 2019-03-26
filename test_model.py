@@ -12,13 +12,13 @@ from tqdm import tqdm
 
 from config import RANDOM_SEED, device, MODEL_DIR, FREQUENCY, TIME_WINDOW
 from dataset_utils import load_testset
-from rocking_dataset import RockingDataset
+from rocking_dataset_eval import RockingDatasetEval
 from training_utils import get_model
 
 torch.manual_seed(RANDOM_SEED)
 
 def test_model(model):
-    test_dataloader, test_datasize = load_testset(RockingDataset)
+    test_dataloader, test_datasize = load_testset(RockingDatasetEval)
     model.eval()
     results = []
     corrects = 0
@@ -26,12 +26,7 @@ def test_model(model):
         image, label = image.to(device), label.to(device)
         outputs = model(image)
         raw_preds = torch.argmax(outputs.data, 1)
-        preds = []
-        for pred in raw_preds:
-            for j in range(FREQUENCY * TIME_WINDOW):
-                preds.append(pred)
-
-        preds = torch.Tensor(np.asarray(preds).astype(np.long))
+        preds = torch.Tensor(np.asarray(raw_preds).astype(np.long))
         labels = []
         for l in label:
             labels.extend(l)
