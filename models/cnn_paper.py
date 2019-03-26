@@ -3,11 +3,6 @@
 # Date: 3/24/19
 # Time: 12:34 AM
 
-# File: cnn_model.py
-# Author: Ronil Pancholia
-# Date: 3/23/19
-# Time: 5:52 PM
-
 from torch import nn
 from config import FREQUENCY, TIME_WINDOW
 

@@ -15,6 +15,7 @@ for file_name in prediction_files:
     with open(file_name) as f:
         for line in f:
             predictions.append(float(line.strip()))
+
     print(len(predictions))
 
 print("Reading ground truth")

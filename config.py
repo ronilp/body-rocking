@@ -7,7 +7,7 @@ import torch
 
 ### Learning Parameters
 BASE_LR = 8e-5
-TRAIN_EPOCHS = 10
+TRAIN_EPOCHS = 1
 EARLY_STOPPING_ENABLED = True
 EARLY_STOPPING_PATIENCE = 10
 
