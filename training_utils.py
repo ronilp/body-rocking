@@ -35,6 +35,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
     train_acc = []
     val_acc = []
     best_loss = sys.maxsize
+    best_acc = 0
     patience = 0
 
     for epoch in range(num_epochs):
@@ -55,6 +56,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
         print("Training accuracy: %.4f" % train_acc[-1])
 
         if val_dataloader == None:
+            best_model = model
             continue
 
         model.eval()

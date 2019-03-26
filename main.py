@@ -35,6 +35,6 @@ criterion = nn.CrossEntropyLoss()
 # lr_finder.range_test(train_dataloader, val_dataloader, end_lr=0.1, num_iter=100)
 # lr_finder.plot()
 
-train_loss, train_acc, val_loss, val_acc, model = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
+train_loss, train_acc, val_loss, val_acc = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
 
 save_loss_acc(train_loss, train_acc, val_loss, val_acc)
