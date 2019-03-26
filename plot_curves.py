@@ -27,9 +27,9 @@ def save_plots(train_loss, train_acc, val_loss, val_acc):
     plt.show()
     plt.savefig(config.MODEL_PREFIX + "_accuracy.png")
 
-train_acc = pickle.load(open("cnn_v2train_acc", "rb"))
-val_acc = pickle.load(open("cnn_v2val_acc", "rb"))
-train_loss = pickle.load(open("cnn_v2train_loss", "rb"))
-val_loss = pickle.load(open("cnn_v2val_loss", "rb"))
+train_acc = pickle.load(open("cnn_v2_train_acc.pkl", "rb"))
+val_acc = pickle.load(open("cnn_v2_val_acc.pkl", "rb"))
+train_loss = pickle.load(open("cnn_v2_train_loss.pkl", "rb"))
+val_loss = pickle.load(open("cnn_v2_val_loss.pkl", "rb"))
 
 save_plots(train_loss, train_acc, val_loss, val_acc)
