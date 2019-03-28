@@ -12,6 +12,7 @@ from torch import optim
 from tqdm import tqdm
 
 from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED
+from models.cnn_3d import Cnn_3D
 from models.cnn_paper import Cnn_Model3
 
 
@@ -95,7 +96,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
     print('Best accuracy: {:4f}'.format(best_acc))
     print('Best loss:', best_loss)
 
-    return train_loss, train_acc, val_loss, val_acc, best_model
+    return train_loss, train_acc, val_loss, val_acc
 
 
 def get_model():
