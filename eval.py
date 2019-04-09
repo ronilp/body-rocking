@@ -63,11 +63,11 @@ ground_truth_files = ["data/TrainingData/test/Session02/detection.txt", "data/Tr
 
 
 def get_precision(TP, FP):
-    return TP / (TP + FP)
+    return TP / (TP + FP + 0.0000000001)
 
 
 def get_recall(TP, FN):
-    return TP / (TP + FN)
+    return TP / (TP + FN + 0.0000000001)
 
 
 def get_f1(TP, FP, FN):
