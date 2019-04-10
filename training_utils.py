@@ -52,7 +52,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 
         train_loss.append(running_loss / len(train_dataloader.dataset))
         train_acc.append(running_corrects.item() / (len(train_dataloader.dataset)))
-        print("Training loss: %.6f accuracy: %.4f", train_loss[-1], train_acc[-1])
+        print('Training loss: {:6f}, accuracy: {:4f}'.format(train_loss[-1], train_acc[-1]))
 
         if val_dataloader == None:
             best_model = model
@@ -69,16 +69,14 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 
         val_loss.append(running_loss / len(val_dataloader.dataset))
         val_acc.append(running_corrects.item() / (len(val_dataloader.dataset)))
-        print("Validation loss:", val_loss[-1])
-        print("Validation accuracy: %.4f" % val_acc[-1])
+        print('Validation loss: {:6f}, accuracy: {:4f}'.format(val_loss[-1], val_acc[-1]))
 
         if val_loss[-1] < best_loss:
             patience = 0
             best_acc = val_acc[-1]
             best_loss = val_loss[-1]
             best_model = copy.deepcopy(model)
-            print('Best accuracy: {:4f}'.format(best_acc))
-            print('Best loss:', best_loss)
+            print('Best accuracy: {:4f}, loss: {:6f}'.format(best_acc, best_loss))
             model_name = MODEL_PREFIX + "_" + str(epoch) + "_" + str(time.time()) + ".pt"
             torch.save(model.state_dict(), os.path.join(MODEL_DIR, model_name))
             print("Saved model :", model_name)
@@ -91,8 +89,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
             print("Early Stopping!")
             break
 
-    print('Best accuracy: {:4f}'.format(best_acc))
-    print('Best loss:', best_loss)
+    print('Best accuracy: {:4f}, loss: {:6f}'.format(best_acc, best_loss))
 
     return train_loss, train_acc, val_loss, val_acc
 
