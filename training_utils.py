@@ -12,7 +12,6 @@ from torch import optim
 from tqdm import tqdm
 
 from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED
-from models.cnn_3d import Cnn_3D
 from models.cnn_paper import Cnn_Model3
 
 
