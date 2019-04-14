@@ -17,7 +17,7 @@ class RockingDataset(Dataset):
         self.transforms = transforms
 
         if sessions is not None:
-            sessions = set(sessions) - set(os.listdir(dir_path))
+            sessions = set(sessions).intersection(set(os.listdir(dir_path)))
         else:
             sessions = os.listdir(dir_path)
 
