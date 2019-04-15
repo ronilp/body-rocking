@@ -19,7 +19,7 @@ torch.manual_seed(RANDOM_SEED)
 
 
 def test_model(model, sessions):
-    test_dataloader, test_datasize = load_testset(RockingDataset, sessions)
+    test_dataloader, test_datasize = load_testset(RockingDataset, sessions=sessions)
     model.eval()
     results = []
     for image, label in tqdm(test_dataloader['test'], file=sys.stdout):
@@ -39,7 +39,7 @@ model.load_state_dict(torch.load(os.path.join(MODEL_DIR, model_name)))
 sessions = ["Session05", "Session16"]
 
 for session in sessions:
-    results = test_model(model, sessions=[session])
+    results = test_model(model, [session])
     with open(session + ".txt", "w") as f:
         for r in results:
             f.write(str(r) + "\n")
