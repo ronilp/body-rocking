@@ -23,18 +23,22 @@ def save_loss_acc(train_loss, train_acc, val_loss, val_acc):
     pickle.dump(val_acc, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_val_acc.pkl"), "wb"))
 
 
-dataset_loaders, dataset_sizes = load_datasets(RockingDataset)
-train_dataloader = dataset_loaders['train']
-val_dataloader = dataset_loaders['val']
+def main():
+    dataset_loaders, dataset_sizes = load_datasets(RockingDataset)
+    train_dataloader = dataset_loaders['train']
+    val_dataloader = dataset_loaders['val']
 
-model, opt = get_model()
-criterion = nn.CrossEntropyLoss()
+    model, opt = get_model(model_='CNN_LSTM')
+    criterion = nn.CrossEntropyLoss()
 
 # from LRFinder import LRFinder
 # lr_finder = LRFinder(model, opt, criterion, device="cpu")
 # lr_finder.range_test(train_dataloader, val_dataloader, end_lr=0.1, num_iter=100)
 # lr_finder.plot()
+    train_loss, train_acc, val_loss, val_acc = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
+    save_loss_acc(train_loss, train_acc, val_loss, val_acc)
 
-train_loss, train_acc, val_loss, val_acc = fit(TRAIN_EPOCHS, model, criterion, opt, train_dataloader, val_dataloader)
 
-save_loss_acc(train_loss, train_acc, val_loss, val_acc)
+if __name__ == '__main__':
+    main()
+

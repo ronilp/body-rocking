@@ -12,8 +12,10 @@ from torch import optim
 from tqdm import tqdm
 
 from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED
-from models.cnn_3d import Cnn_3D
+import config
+#from models.cnn_3d import Cnn_3D
 from models.cnn_paper import Cnn_Model3
+from models.cnn_lstm_model import CnnLSTMModel
 
 
 def loss_batch(model, criterion, x, y, opt=None):
@@ -99,7 +101,12 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
     return train_loss, train_acc, val_loss, val_acc
 
 
-def get_model():
-    model = Cnn_Model3()
+def get_model(model_='CNN'):
+    if model_ == 'CNN':
+        model = Cnn_Model3()
+    else:
+        model = CnnLSTMModel(input_dim=config.LSTM_IN_SIZE, hidden_dim=10, batch_size=config.BATCH_SIZE,
+                             output_dim=config.NUM_CLASSES, num_layers=2)
     model.to(device)
     return model, optim.Adam(model.parameters(), lr=BASE_LR)
+
