@@ -12,13 +12,18 @@ from read_data import read_session_data
 
 
 class RockingDataset(Dataset):
-    def __init__(self, dir_path, mode, transforms=None):
+    def __init__(self, dir_path, mode, transforms=None, sessions=None):
         # Set transforms
         self.transforms = transforms
 
-        arm_files = [os.path.join(os.path.join(dir_path, session), "armIMU.txt") for session in os.listdir(dir_path)]
-        wrist_files = [os.path.join(os.path.join(dir_path, session), "wristIMU.txt") for session in os.listdir(dir_path)]
-        detection_files = [os.path.join(os.path.join(dir_path, session), "detection.txt") for session in os.listdir(dir_path)]
+        if sessions is not None:
+            sessions = set(sessions) - set(os.listdir(dir_path))
+        else:
+            sessions = os.listdir(dir_path)
+
+        arm_files = [os.path.join(os.path.join(dir_path, session), "armIMU.txt") for session in sessions]
+        wrist_files = [os.path.join(os.path.join(dir_path, session), "wristIMU.txt") for session in sessions]
+        detection_files = [os.path.join(os.path.join(dir_path, session), "detection.txt") for session in sessions]
 
         print("Loading dataset from ", dir_path)
         self.arm_data = read_session_data(arm_files, multi_value=True, is_label=False, mode=mode)

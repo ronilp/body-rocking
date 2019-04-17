@@ -23,11 +23,11 @@ def load_datasets(DatasetClass, transforms=None, datasets=None):
     return dataset_loaders, dataset_sizes
 
 
-def load_testset(DatasetClass, transforms=None, datasets=None):
+def load_testset(DatasetClass, transforms=None, datasets=None, sessions=None):
     if datasets is None:
-        datasets = {x: DatasetClass(os.path.join(config.DATA_DIR, x), x, transforms) for x in ['test']}
+        datasets = {x: DatasetClass(os.path.join(config.DATA_DIR, x), x, transforms, sessions) for x in ['test']}
     dataset_loaders = {
-        x: torch.utils.data.DataLoader(datasets[x], batch_size=config.BATCH_SIZE * 4, shuffle=False,
+        x: torch.utils.data.DataLoader(datasets[x], batch_size=config.BATCH_SIZE * 16, shuffle=False,
                                        num_workers=multiprocessing.cpu_count()) for x in ['test']}
     dataset_sizes = {x: len(datasets[x]) for x in ['test']}
     return dataset_loaders, dataset_sizes

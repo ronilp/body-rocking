@@ -18,8 +18,8 @@ from training_utils import get_model
 torch.manual_seed(RANDOM_SEED)
 
 
-def test_model(model):
-    test_dataloader, test_datasize = load_testset(RockingDataset)
+def test_model(model, sessions):
+    test_dataloader, test_datasize = load_testset(RockingDataset, sessions)
     model.eval()
     results = []
     for image, label in tqdm(test_dataloader['test'], file=sys.stdout):
@@ -36,8 +36,10 @@ model, opt = get_model()
 model_name = sys.argv[1]
 model.load_state_dict(torch.load(os.path.join(MODEL_DIR, model_name)))
 
-results = test_model(model)
+sessions = ["Session05", "Session16"]
 
-with open("prediction.txt", "w") as f:
-    for r in results:
-        f.write(str(r) + "\n")
+for session in sessions:
+    results = test_model(model, sessions=[session])
+    with open(session + ".txt", "w") as f:
+        for r in results:
+            f.write(str(r) + "\n")
