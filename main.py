@@ -42,7 +42,7 @@ dataset_loaders, dataset_sizes = load_datasets(RockingDataset)
 train_dataloader = dataset_loaders['train']
 val_dataloader = dataset_loaders['val']
 
-model, opt = get_model()
+model, opt = get_model(model_='CNN_LSTM')
 # criterion = ActivityLoss()
 criterion = nn.CrossEntropyLoss()
 

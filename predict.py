@@ -36,7 +36,7 @@ model, opt = get_model()
 model_name = sys.argv[1]
 model.load_state_dict(torch.load(os.path.join(MODEL_DIR, model_name)))
 
-sessions = ["Session05", "Session16"]
+sessions = ["Session02", "Session03", "Session05", "Session06", "Session07", "Session12", "Session13", "Session15", "Session16"]
 
 for session in sessions:
     results = test_model(model, [session])

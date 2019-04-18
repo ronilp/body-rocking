@@ -11,7 +11,9 @@ import torch
 from torch import optim
 from tqdm import tqdm
 
-from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED
+import config
+from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED, BATCH_SIZE
+from models.cnn_lstm_model import CnnLSTMModel
 from models.cnn_paper import Cnn_Model3
 
 
@@ -50,7 +52,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
             running_loss += losses
             running_corrects += corrects
 
-        train_loss.append(running_loss / len(train_dataloader.dataset))
+        train_loss.append(running_loss / (len(train_dataloader.dataset) / BATCH_SIZE))
         train_acc.append(running_corrects.item() / (len(train_dataloader.dataset)))
         print('Training loss: {:6f}, accuracy: {:4f}'.format(train_loss[-1], train_acc[-1]))
 
@@ -67,7 +69,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
                 running_loss += losses
                 running_corrects += corrects
 
-        val_loss.append(running_loss / len(val_dataloader.dataset))
+        val_loss.append(running_loss / (len(train_dataloader.dataset) / BATCH_SIZE))
         val_acc.append(running_corrects.item() / (len(val_dataloader.dataset)))
         print('Validation loss: {:6f}, accuracy: {:4f}'.format(val_loss[-1], val_acc[-1]))
 
@@ -94,7 +96,10 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
     return train_loss, train_acc, val_loss, val_acc
 
 
-def get_model():
-    model = Cnn_Model3()
+def get_model(model_='CNN'):
+    if model_ == 'CNN':
+        model = Cnn_Model3()
+    else:
+        model = CnnLSTMModel(input_dim=config.LSTM_IN_SIZE, hidden_dim=config.HIDDEN_DIM, batch_size=config.BATCH_SIZE, output_dim=config.NUM_CLASSES)
     model.to(device)
     return model, optim.Adam(model.parameters(), lr=BASE_LR)
