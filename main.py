@@ -27,9 +27,9 @@ class ActivityLoss(torch.nn.Module):
         pred_map = get_map(predictions)
         gt_map = get_map(y)
         FP, FN, TP = get_metric_values(gt_map, pred_map)
-        f1 = 1 - get_f1(TP, FP, FN)
-        d = Variable(torch.tensor(f1 * 1.0), requires_grad=True)
-        return d
+        loss = 1 - get_f1(TP, FP, FN) * 1.0
+        loss = Variable(torch.tensor(loss), requires_grad=True)
+        return loss
 
 def save_loss_acc(train_loss, train_acc, val_loss, val_acc):
     pickle.dump(train_loss, open(os.path.join(MODEL_DIR, MODEL_PREFIX + "_train_loss.pkl"), "wb"))
@@ -43,7 +43,8 @@ train_dataloader = dataset_loaders['train']
 val_dataloader = dataset_loaders['val']
 
 model, opt = get_model()
-criterion = ActivityLoss()
+# criterion = ActivityLoss()
+criterion = nn.CrossEntropyLoss()
 
 # from LRFinder import LRFinder
 # lr_finder = LRFinder(model, opt, criterion, device="cpu")
