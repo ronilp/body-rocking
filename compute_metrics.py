@@ -4,8 +4,8 @@
 # Time: 11:06 PM
 from sklearn.metrics import classification_report, accuracy_score
 
-prediction_files = ["session07_prediction.txt", "session13_prediction.txt"]
-ground_truth_files = ["data/TrainingData/val/Session07/detection.txt", "data/TrainingData/val/Session13/detection.txt"]
+prediction_files = ["Session05.txt", "Session16.txt"]
+ground_truth_files = ["data/TrainingData/test/Session05/detection.txt", "data/TrainingData/test/Session16/detection.txt"]
 
 predictions = []
 ground_truth = []

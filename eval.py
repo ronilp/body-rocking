@@ -73,7 +73,7 @@ def get_recall(TP, FN):
 def get_f1(TP, FP, FN):
     p = get_precision(TP, FP)
     r = get_recall(TP, FN)
-    return (2 * p * r) / (p + r)
+    return (2 * p * r) / (p + r + 0.0000000001)
 
 def get_map(values):
     gt_map = []
@@ -97,46 +97,48 @@ FP_running = 0
 FN_running = 0
 TP_running = 0
 
-for i in range(len(ground_truth_files)):
-    print("Reading ", prediction_files[i])
-    ground_truth = []
-    with open(ground_truth_files[i]) as f:
-        for line in f:
-            ground_truth.append(float(line.strip()))
+if __name__ == "__main__":
 
-    predictions = []
-    with open(prediction_files[i]) as f:
-        for line in f:
-            predictions.append(float(line.strip()))
+    for i in range(len(ground_truth_files)):
+        print("Reading ", prediction_files[i])
+        ground_truth = []
+        with open(ground_truth_files[i]) as f:
+            for line in f:
+                ground_truth.append(float(line.strip()))
 
-    gt_map = get_map(ground_truth)
-    pred_map = get_map(predictions)
+        predictions = []
+        with open(prediction_files[i]) as f:
+            for line in f:
+                predictions.append(float(line.strip()))
 
-    print("Ground truth")
-    for event in gt_map:
-        print (event[1] - event[0])
+        gt_map = get_map(ground_truth)
+        pred_map = get_map(predictions)
 
-    print("Predictions")
-    for event in pred_map:
-        print (event[1] - event[0])
+        # print("Ground truth")
+        # for event in gt_map:
+        #     print (event[1] - event[0])
+        #
+        # print("Predictions")
+        # for event in pred_map:
+        #     print (event[1] - event[0])
 
-    FP, FN, TP = get_metric_values(gt_map, pred_map)
-    FP_running += FP
-    FN_running += FN
-    TP_running += TP
+        FP, FN, TP = get_metric_values(gt_map, pred_map)
+        FP_running += FP
+        FN_running += FN
+        TP_running += TP
 
-    print ("Results")
-    print(TP, FN, FP)
-    print("Precision :", get_precision(TP, FP))
-    print("Recall :", get_recall(TP, FN))
-    print("F1 :", get_f1(TP, FP, FN))
+        print ("Results")
+        print(TP, FN, FP)
+        print("Precision :", get_precision(TP, FP))
+        print("Recall :", get_recall(TP, FN))
+        print("F1 :", get_f1(TP, FP, FN))
 
-print("Averages")
-TP_avg = TP_running/len(prediction_files)
-FN_avg = FN_running/len(prediction_files)
-FP_avg = FP_running/len(prediction_files)
-print(TP_avg, FN_avg, FP_avg)
+    print("Averages")
+    TP_avg = TP_running/len(prediction_files)
+    FN_avg = FN_running/len(prediction_files)
+    FP_avg = FP_running/len(prediction_files)
+    print(TP_avg, FN_avg, FP_avg)
 
-print ("Precision :", get_precision(TP_avg, FP_avg))
-print ("Recall :", get_recall(TP_avg, FN_avg))
-print ("F1 :", get_f1(TP_avg, FP_avg, FN_avg))
+    print ("Precision :", get_precision(TP_avg, FP_avg))
+    print ("Recall :", get_recall(TP_avg, FN_avg))
+    print ("F1 :", get_f1(TP_avg, FP_avg, FN_avg))
