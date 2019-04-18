@@ -52,8 +52,7 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 
         train_loss.append(running_loss / len(train_dataloader.dataset))
         train_acc.append(running_corrects.item() / (len(train_dataloader.dataset)))
-        print("Training loss:", train_loss[-1])
-        print("Training accuracy: %.4f" % train_acc[-1])
+        print("Training loss: %.6f accuracy: %.4f", train_loss[-1], train_acc[-1])
 
         if val_dataloader == None:
             best_model = model
