@@ -63,7 +63,9 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
         print('Training loss: {:6f}, accuracy: {:4f}'.format(train_loss[-1], train_acc[-1]))
 
         if val_dataloader == None:
-            best_model = model
+            model_name = MODEL_PREFIX + "_" + str(epoch) + "_" + str(time.time()) + ".pt"
+            torch.save(model.state_dict(), os.path.join(MODEL_DIR, model_name))
+            print("Saved model :", model_name)
             continue
 
         model.eval()
