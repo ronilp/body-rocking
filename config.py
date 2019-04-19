@@ -18,8 +18,8 @@ NUM_CLASSES = len(ALLOWED_CLASSES)
 MODEL_DIR = "results"
 
 ### Miscellaneous Config
-MODEL_PREFIX = "cnn_v3"
-BATCH_SIZE = 32
+MODEL_PREFIX = "lstm_v5"
+BATCH_SIZE = 64
 RANDOM_SEED = 629
 TIME_WINDOW = 3 # in seconds
 TRAIN_OVERLAP = 0.1

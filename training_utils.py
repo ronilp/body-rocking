@@ -15,6 +15,12 @@ import config
 from config import device, BASE_LR, MODEL_PREFIX, MODEL_DIR, EARLY_STOPPING_PATIENCE, EARLY_STOPPING_ENABLED, BATCH_SIZE
 from models.cnn_lstm_model import CnnLSTMModel
 from models.cnn_paper import Cnn_Model3
+from models.lstm_v2 import LSTM_v2
+from models.lstm_v3 import LSTM_v3
+from models.lstm_v4 import LSTM_v4
+from models.lstm_v5 import LSTM_v5
+from models.lstm_v6 import LSTM_v6
+from models.lstm_v7 import LSTM_v7
 
 
 def loss_batch(model, criterion, x, y, opt=None):
@@ -99,7 +105,20 @@ def fit(num_epochs, model, criterion, opt, train_dataloader, val_dataloader=None
 def get_model(model_='CNN'):
     if model_ == 'CNN':
         model = Cnn_Model3()
-    else:
+    elif model_ == "CNN_LSTM":
         model = CnnLSTMModel(input_dim=config.LSTM_IN_SIZE, hidden_dim=config.HIDDEN_DIM, batch_size=config.BATCH_SIZE, output_dim=config.NUM_CLASSES)
+    elif model_ == "lstm_v2":
+        model = LSTM_v2()
+    elif model_ == "lstm_v3":
+        model = LSTM_v3()
+    elif model_ == "lstm_v4":
+        model = LSTM_v4()
+    elif model_ == "lstm_v5":
+        model = LSTM_v5()
+    elif model_ == "lstm_v6":
+        model = LSTM_v6()
+    elif model_ == "lstm_v7":
+        model = LSTM_v7()
+
     model.to(device)
-    return model, optim.Adam(model.parameters(), lr=BASE_LR)
+    return model, optim.RMSprop(model.parameters(), lr=BASE_LR)
